@@ -1,85 +1,94 @@
-# Plantilla del Curso: Deep Learning
+# Predicción de sentimiento en comentarios NPS
 
-Este repositorio es una **plantilla** para el proyecto final del curso de *Advanced Machine Learning*.
-Cada estudiante debe crear su propio repositorio a partir de esta plantilla y trabajar únicamente en el notebook principal desde Google Colab.
+Proyecto de Machine Learning y NLP para clasificar automáticamente comentarios de clientes en categorías **Detractor**, **Neutro** y **Promotor**, a partir de encuestas **NPS** de una procesadora de pagos.
 
----
+## Descripción del proyecto
 
-## Pasos para usar esta plantilla (OBLIGATORIO)
+Las empresas que gestionan encuestas NPS suelen recibir miles de comentarios abiertos de clientes. Aunque la nota numérica resume el nivel de satisfacción, el valor real está en entender rápidamente el motivo detrás de cada calificación.
 
-### 1. Crear tu repositorio personal
+Este proyecto propone una solución de **Procesamiento de Lenguaje Natural (NLP)** para automatizar la clasificación de comentarios y transformar la voz del cliente en información accionable para el negocio.
 
-1. Ir a este repositorio plantilla
-2. Hacer clic en el botón verde **“Use this template”**
-3. Crear un nuevo repositorio con el nombre:
+## Objetivo
 
-   `AML-Final-Apellido-Nombre`
+Desarrollar un modelo de clasificación multiclase que permita predecir automáticamente la categoría NPS de un comentario de cliente:
 
-Ejemplo: `AML-Final-Marino-C.`
+- **Detractor**: notas de 0 a 6
+- **Neutro**: notas de 7 a 8
+- **Promotor**: notas de 9 a 10
 
----
+## Dataset
 
-### 2. Trabajar SOLO en el notebook desde Colab
+El dataset utilizado contiene información de encuestas NPS con las siguientes variables principales:
 
-1. En tu repositorio, entrar a la carpeta `notebooks/`
-2. Abrir el archivo: `final_project.ipynb`
-3. Hacer clic en **“Open in Colab”**
-4. Desarrollar todo tu proyecto dentro de este notebook
+- `id`: identificador único de la encuesta o cliente
+- `nota_nps`: calificación otorgada por el cliente
+- `comentario`: texto abierto con la opinión del cliente
+- `categoria_nps`: variable objetivo generada a partir de la nota NPS
 
-No es necesario usar comandos de git ni terminal.
+### Características del dataset
 
----
+- **Volumen original**: 50,000 registros
+- **Problema**: clasificación multiclase supervisada
+- **Tipo de datos**: texto libre + variable numérica derivada
 
-### 3. Guardar cambios directamente en GitHub
+## Metodología
 
-Dentro de Colab:
+El pipeline implementado incluye las siguientes etapas:
 
-* Ir a **File → Save a copy in GitHub**
-* Seleccionar tu repositorio personal
-* Confirmar sobrescribir el notebook
+1. **Carga y exploración de datos**
+2. **Limpieza y normalización de texto**
+3. **Eliminación de duplicados exactos**
+4. **Creación de la variable objetivo**
+5. **Vectorización TF-IDF**
+6. **Entrenamiento de modelos de clasificación**
+7. **Evaluación y comparación con modelos baseline**
+8. **Análisis de interpretabilidad**
 
-De esta forma, tu trabajo quedará guardado automáticamente en GitHub.
+## Modelos evaluados
 
----
+Se compararon distintos enfoques de clasificación:
 
-## Estructura del repositorio (NO modificar)
+- **Red neuronal multicapa (MLP) en PyTorch**
+- **Logistic Regression**
+- **Random Forest**
 
-* `notebooks/` → Notebook principal del proyecto
-* `src/` → Código auxiliar (opcional)
-* `data/` → Solo instrucciones del dataset (no subir datos grandes)
-* `results/` → Resultados y métricas
-* `figures/` → Gráficos generados
-* `report/` → Reporte final (PDF o Markdown)
+### Modelo principal
 
-Los estudiantes deben principalmente trabajar en:
-`notebooks/final_project.ipynb`
+El modelo principal utiliza:
 
----
+- representación **TF-IDF**
+- features numéricas auxiliares
+- arquitectura densa en PyTorch
+- capas ocultas de **128, 64 y 32 neuronas**
+- activación **ReLU**
+- regularización con **Dropout**
+- función de pérdida **CrossEntropyLoss**
 
-## Reglas importantes
+## Resultados
 
-* No subir datasets grandes o datos sensibles
-* El notebook debe poder ejecutarse en Colab
-* Incluir visualizaciones y evaluación del modelo
-* Mantener el código organizado y reproducible
+Los modelos evaluados obtuvieron un desempeño sobresaliente en el conjunto de prueba.
 
----
+### Métricas principales
 
-## Entrega final
+- **Accuracy**: 1.0000
+- **Precision**: 1.0000
+- **Recall**: 1.0000
+- **F1-Score**: 1.0000
 
-Cada estudiante deberá enviar:
+### Interpretación
 
-1. El enlace de su repositorio en GitHub
-2. El notebook final completamente ejecutable
-3. (Opcional) un tag final: `v1.0-final`
+Los resultados sugieren que el dataset presenta patrones lingüísticos muy marcados entre las clases. Sin embargo, antes de llevar la solución a producción, es recomendable validar el modelo con datos nuevos y más recientes para comprobar su robustez fuera de muestra.
 
----
+## Estructura del repositorio
 
-## Objetivo pedagógico
-
-Esta estructura busca que los estudiantes:
-
-* Practiquen reproducibilidad en ML
-* Mantengan organización profesional del código
-* Usen GitHub como portafolio académico
-* Integren experimentación, evaluación y visualización en un único flujo reproducible
+```bash
+.
+├── data/
+│   └── README.md
+├── figures/
+├── notebooks/
+├── report/
+├── results/
+├── src/
+├── README.md
+└── requirements.txt
